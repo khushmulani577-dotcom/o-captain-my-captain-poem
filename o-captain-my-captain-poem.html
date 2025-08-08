@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Captain! My Captain! - Walt Whitman</title>
+    <style>
+        :root {
+            --soft-peach: #ffd8c9;
+            --lavender: #e2d4f0;
+            --pale-mint: #d5e8e4;
+            --blush: #f8d7da;
+            --dusty-rose: #d4a5a5;
+            --sage: #c1c9b2;
+            --sunflower: #FFDE59;
+            --teal: #1AA7A7;
+            --lilac: #C8A2C8;
+            --buttercup: #f9d423;
+            --peach-blush: #ffb3ba;
+            --sky-blue: #bae1ff;
+            --navy: #0a2342;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --floral-border: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0,0 Q25,10 50,0 T100,0" fill="%23d4a5a5" opacity="0.3"/></svg>');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.8;
+            color: #4a4a4a;
+            background-color: var(--soft-peach);
+            background-image: radial-gradient(circle, var(--lavender) 1px, transparent 1px);
+            background-size: 20px 20px;
+            scroll-behavior: smooth;
+        }
+
+        @font-face {
+            font-family: 'Cormorant Garamond';
+            src: url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&display=swap');
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(-3deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(-3deg); }
+        }
+
+        @keyframes petalFall {
+            0% { transform: translateY(-100px) rotate(0deg) scale(0.8); opacity: 0; }
+            30% { opacity: 0.8; transform: scale(1.1); }
+            60% { transform: rotate(180deg); }
+            100% { transform: translateY(100vh) rotate(360deg) scale(0.5); opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes colorShift {
+            0% { background-color: var(--lavender); }
+            25% { background-color: var(--pale-mint); }
+            50% { background-color: var(--sky-blue); }
+            75% { background-color: var(--peach-blush); }
+            100% { background-color: var(--lavender); }
+        }
+        
+        @keyframes borderGlow {
+            0% { box-shadow: 0 0 5px var(--buttercup); }
+            50% { box-shadow: 0 0 20px var(--sunflower); }
+            100% { box-shadow: 0 0 5px var(--buttercup); }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateX(-100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--lavender), var(--pale-mint));
+            color: var(--navy);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 20px solid;
+            border-image: var(--floral-border) 20 stretch;
+        }
+
+        .paper-texture {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none" stroke="%23d4a5a5" stroke-width="0.5" stroke-opacity="0.3"/></svg>');
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1::after {
+            content: '❀';
+            position: absolute;
+            right: -30px;
+            top: -15px;
+            color: var(--dusty-rose);
+            font-size: 2rem;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            font-style: italic;
+            color: var(--navy);
+            opacity: 0.8;
+            animation: fadeIn 2s ease-out 0.3s both;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--dusty-rose);
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--navy);
+            margin-bottom: 3rem;
+            position: relative;
+            padding-left: 2rem;
+            border-left: 4px solid var(--sage);
+        }
+
+        .section-title::before {
+            content: '❁';
+            position: absolute;
+            left: -5px;
+            top: -5px;
+            color: var(--dusty-rose);
+            font-size: 1.5rem;
+        }
+
+        .about-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--blush);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, var(--dusty-rose) 0%, transparent 70%);
+            opacity: 0.1;
+        }
+
+        .about-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poem-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 4rem 3rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow);
+            background-image: linear-gradient(to right, white, white), 
+                            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 Q50,30 70,50 T90,50" fill="none" stroke="%23d4a5a5" stroke-width="0.5" stroke-opacity="0.2"/></svg>');
+            background-blend-mode: overlay;
+            position: relative;
+        }
+
+        .poem-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background-image: var(--floral-border);
+            background-repeat: repeat-x;
+        }
+
+        .poem-line {
+            margin-bottom: 1.8rem;
+            padding-left: 3rem;
+            position: relative;
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s ease;
+        }
+
+        .poem-line.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .poem-line::before {
+            content: '🌸';
+            position: absolute;
+            left: 0;
+            font-size: 1rem;
+            opacity: 0.5;
+            transition: all 0.5s ease;
+        }
+        
+        .poem-line:hover::before {
+            transform: scale(1.5) rotate(15deg);
+            color: var(--teal);
+            opacity: 1;
+        }
+        
+        .poem-line:hover {
+            color: var(--navy);
+            text-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .stanza {
+            margin-bottom: 3.5rem;
+            border-bottom: 1px dashed var(--blush);
+            padding-bottom: 1.5rem;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, var(--lavender), var(--pale-mint));
+            color: var(--navy);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .quote-section::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,0 Q90,15 100,50 Q85,90 50,100 Q10,85 0,50 Q15,10 50,0Z" fill="%23d4a5a5" opacity="0.2"/></svg>');
+            background-repeat: no-repeat;
+        }
+
+        .quote {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            font-style: italic;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .quote::after {
+            content: '❝';
+            position: absolute;
+            bottom: -40px;
+            right: 20px;
+            font-size: 5rem;
+            color: var(--dusty-rose);
+            opacity: 0.3;
+        }
+
+        .author {
+            font-size: 1.2rem;
+            color: var(--dusty-rose);
+            font-weight: 500;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            perspective: 1000px;
+        }
+
+        .gallery-card:nth-child(odd) {
+            animation: slideIn 1s ease-out;
+        }
+
+        .gallery-card:nth-child(even) {
+            animation: slideIn 1s ease-out 0.3s forwards;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid var(--blush);
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--teal);
+            animation: pulse 1.5s infinite;
+        }
+
+        .gallery-img {
+            transition: all 0.5s ease;
+        }
+
+        .gallery-card:hover .gallery-img {
+            transform: scale(1.05);
+            filter: sepia(0.2) brightness(1.05);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--blush);
+        }
+
+        .gallery-caption {
+            padding: 1.5rem;
+        }
+
+        .gallery-caption h3 {
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .gallery-caption p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--lavender), var(--pale-mint));
+            color: var(--navy);
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background-image: var(--floral-border);
+            background-repeat: repeat-x;
+        }
+
+        .petal {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            animation: petalFall linear infinite;
+            font-size: 1.2rem;
+            color: var(--dusty-rose);
+        }
+
+        /* Animation triggers */
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Analysis Section */
+        .analysis-section {
+            background: linear-gradient(to right, rgba(186,225,255,0.2), rgba(255,214,201,0.2));
+            padding: 4rem 0;
+            border-top: 1px dashed var(--dusty-rose);
+            border-bottom: 1px dashed var(--dusty-rose);
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .analysis-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--blush);
+        }
+        
+        .analysis-card:hover {
+            transform: translateY(-10px);
+            animation: borderGlow 2s infinite;
+        }
+
+        /* Thank You Section */
+        .thank-you-section {
+            background: linear-gradient(135deg, var(--pale-mint), var(--lavender));
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .thank-you-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .thank-you-message {
+            margin: 1.5rem 0;
+            font-style: italic;
+            padding: 1rem;
+            border-left: 3px solid var(--dusty-rose);
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 1rem;
+            font-weight: 500;
+            color: var(--navy);
+        }
+
+        .cta-btn {
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            margin-top: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: var(--sunflower);
+            transform: scale(1.05);
+        }
+        
+        .analysis-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: var(--sunflower);
+            border-radius: 50%;
+            opacity: 1;
+            animation: confettiFall 5s linear forwards;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        @keyframes confettiFall {
+            0% { 
+                transform: translateY(-100vh) translateX(-50vw) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) translateX(50vw) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 4rem 1rem;
+            }
+            
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .quote {
+                font-size: 1.4rem;
+            }
+            
+            .gallery-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="paper-texture"></div>
+        <h1>O Captain! My Captain!</h1>
+        <p class="subtitle">A Floral Tribute to Walt Whitman's Elegy</p>
+        <div class="scroll-down">✿</div>
+        
+        <!-- Animated petals -->
+        <div class="petal" style="left: 10%; animation-duration: 15s; animation-delay: 1s;">❀</div>
+        <div class="petal" style="left: 30%; animation-duration: 20s; animation-delay: 3s;">✿</div>
+        <div class="petal" style="left: 70%; animation-duration: 18s; animation-delay: 2s;">❁</div>
+    </header>
+
+    <div class="container">
+        <section class="about-section hidden">
+            <h2 class="section-title">About the Poem</h2>
+            <p>Written in 1865 as an elegy for President Abraham Lincoln, "O Captain! My Captain!" remains one of Walt Whitman's most cherished works. The poem uses the metaphor of a ship's captain to represent Lincoln, who guided the nation through the turbulent waters of the Civil War, only to perish just as victory was achieved.</p>
+            <p>Whitman, known for his free verse, surprised readers with this poem's conventional rhyme and meter—a departure that made it instantly popular. The floral motifs in this presentation reflect Whitman's own love of nature, which permeates much of his work.</p>
+        </section>
+
+        <section class="quote-section">
+            <p class="quote">"The ship is anchor'd safe and sound, its voyage closed and done"</p>
+            <p class="author">— Walt Whitman, 1865</p>
+        </section>
+
+        <section class="image-gallery">
+            <div class="gallery-card hidden">
+                <img src="https://medias.artmajeur.com/standard/17021152_img-3910.jpg?v=1738448765" alt="Walt Whitman portrait in soft pastel tones with floral frame" class="gallery-img">
+                <div class="gallery-caption">
+                    <h3>Walt Whitman</h3>
+                    <p>The American poet (1819-1892) whose Leaves of Grass revolutionized poetry. This portrait shows him in later years, his iconic beard framed by stylized flowers.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card hidden">
+                <img src="https://images.pexels.com/photos/11234447/pexels-photo-11234447.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Abraham Lincoln memorial illustration with wreath and flowers" class="gallery-img">
+                <div class="gallery-caption">
+                    <h3>President Lincoln</h3>
+                    <p>The beloved captain of Whitman's poem, shown in memorial with symbolic laurel wreath. His assassination in April 1865 devastated the nation.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card hidden">
+                <img src="https://images.stockcake.com/public/e/2/0/e20f6e2d-428d-43bf-8705-d89dcb963397_large/antique-botanical-book-stockcake.jpg" alt="Antique book illustration with floral motifs around poem" class="gallery-img">
+                <div class="gallery-caption">
+                    <h3>Original Publication</h3>
+                    <p>The poem first appeared in Sequel to Drum-Taps (1865), surrounded by floral printing motifs common in 19th century publications.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="poem-container hidden">
+            <h2 class="section-title">The Complete Poem</h2>
+            
+            <div class="stanza">
+                <p class="poem-line">O Captain! my Captain! our fearful trip is done,</p>
+                <p class="poem-line">The ship has weather'd every rack, the prize we sought is won,</p>
+                <p class="poem-line">The port is near, the bells I hear, the people all exulting,</p>
+                <p class="poem-line">While follow eyes the steady keel, the vessel grim and daring;</p>
+                <p class="poem-line">But O heart! heart! heart!</p>
+                <p class="poem-line">O the bleeding drops of red,</p>
+                <p class="poem-line">Where on the deck my Captain lies,</p>
+                <p class="poem-line">Fallen cold and dead.</p>
+            </div>
+            
+            <div class="stanza">
+                <p class="poem-line">O Captain! my Captain! rise up and hear the bells;</p>
+                <p class="poem-line">Rise up—for you the flag is flung—for you the bugle trills,</p>
+                <p class="poem-line">For you bouquets and ribbon'd wreaths—for you the shores a-crowding,</p>
+                <p class="poem-line">For you they call, the swaying mass, their eager faces turning;</p>
+                <p class="poem-line">Here Captain! dear father!</p>
+                <p class="poem-line">This arm beneath your head!</p>
+                <p class="poem-line">It is some dream that on the deck,</p>
+                <p class="poem-line">You've fallen cold and dead.</p>
+            </div>
+            
+            <div class="stanza">
+                <p class="poem-line">My Captain does not answer, his lips are pale and still,</p>
+                <p class="poem-line">My father does not feel my arm, he has no pulse nor will,</p>
+                <p class="poem-line">The ship is anchor'd safe and sound, its voyage closed and done,</p>
+                <p class="poem-line">From fearful trip, the victor ship, comes in with object won;</p>
+                <p class="poem-line">Exult, O shores, and ring, O bells!</p>
+                <p class="poem-line">But I, with mournful tread,</p>
+                <p class="poem-line">Walk the deck my Captain lies,</p>
+                <p class="poem-line">Fallen cold and dead.</p>
+            </div>
+        </section>
+
+        <section class="about-section hidden">
+            <h2 class="section-title">Legacy & Interpretation</h2>
+            <p>The poem's enduring popularity comes from its emotional directness and universal themes of leadership, loss, and bittersweet victory. The floral motifs in this presentation honor Whitman's own poetic style—his work often celebrated nature's cyclical patterns as metaphors for human experience.</p>
+            <p>Educators note the poem remains valuable for teaching poetic devices: its extended metaphor (ship as nation), apostrophe (direct address to the captain), and juxtaposition of celebratory images with mournful reality. The floral borders and soft colors reflect the poem's Victorian origins while modernizing its presentation.</p>
+        </section>
+    </div>
+
+    <section class="analysis-section hidden">
+        <div class="container">
+            <h2 class="section-title">Poetic Analysis</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <div class="analysis-icon" style="background-color: var(--peach-blush);">📖</div>
+                    <h3>Structure</h3>
+                    <p>The poem's three stanzas parallel the three stages of Lincoln's journey: victory, celebration, and mourning.</p>
+                </div>
+                <div class="analysis-card">
+                    <div class="analysis-icon" style="background-color: var(--sky-blue);">✒️</div>
+                    <h3>Rhyme Scheme</h3>
+                    <p>Uses AABCDEFE pattern, unusual for Whitman who typically wrote in free verse.</p>
+                </div>
+                <div class="analysis-card">
+                    <div class="analysis-icon" style="background-color: var(--buttercup);">🖼️</div>
+                    <h3>Imagery</h3>
+                    <p>Strong naval imagery anchors the extended metaphor for the nation's journey.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="thank-you-section hidden" id="thank-you">
+        <div class="container">
+            <h2 class="section-title">Thank You!</h2>
+            <div class="thank-you-content">
+                <p>We sincerely appreciate you exploring Walt Whitman's masterpiece with us.</p>
+                <div class="thank-you-message">
+                    <p>Like the poem's eternal words, we hope this experience stays with you.</p>
+                    <div class="signature">— The Poetry Curators</div>
+                </div>
+                <button id="confetti-btn" class="cta-btn">Sprinkle Some Joy!</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>✿ A floral tribute to Walt Whitman's immortal words ✿</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">"O Captain! My Captain!" written in 1865 | Presented with pastel floral design</p>
+        
+        <!-- More animated petals -->
+        <div class="petal" style="left: 15%; animation-duration: 20s; animation-delay: 0s;">❀</div>
+        <div class="petal" style="left: 45%; animation-duration: 25s; animation-delay: 5s;">✿</div>
+        <div class="petal" style="left: 85%; animation-duration: 22s; animation-delay: 2s;">❁</div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+
+        document.querySelectorAll('.hidden').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Poem line animation
+        const poemLines = document.querySelectorAll('.poem-line');
+        poemLines.forEach((line, index) => {
+            setTimeout(() => {
+                line.classList.add('fade-in');
+            }, index * 300);
+        });
+
+        // Create falling petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const petals = ['❀','✿','❁','🌸','🌼','🌺','🏵️'];
+            petal.innerHTML = petals[Math.floor(Math.random()*petals.length)];
+            const colors = ['var(--dusty-rose)', 'var(--teal)', 'var(--lilac)', 'var(--sunflower)'];
+            petal.style.color = colors[Math.floor(Math.random()*colors.length)];
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDuration = 15 + Math.random() * 15 + 's';
+            petal.style.animationDelay = Math.random() * 10 + 's';
+            document.body.appendChild(petal);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                petal.remove();
+            }, parseFloat(petal.style.animationDuration) * 1000);
+        }
+
+        // Generate petals periodically
+        setInterval(createPetal, 2000);
+        createPetal(); // Initial petal
+        
+        // Smooth scroll
+        document.querySelector('.scroll-down').addEventListener('click', () => {
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Confetti function
+        document.getElementById('confetti-btn').addEventListener('click', () => {
+            createConfetti();
+        });
+
+        function createConfetti() {
+            const colors = [
+                'var(--sunflower)',
+                'var(--teal)',
+                'var(--lilac)',
+                'var(--peach-blush)',
+                'var(--buttercup)',
+                'var(--sky-blue)'
+            ];
+            
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    // Random horizontal position
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    // Random color
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    // Random size
+                    const size = Math.random() * 15 + 8;
+                    confetti.style.width = size + 'px';
+                    confetti.style.height = size + 'px';
+                    // Random rotation direction
+                    const rotationDirection = Math.random() > 0.5 ? 1 : -1;
+                    // Random animation duration (3-6 seconds)
+                    const duration = Math.random() * 3 + 3;
+                    // Random delay (0-2 seconds)
+                    const delay = Math.random() * 2;
+                    
+                    confetti.style.animation = `confettiFall ${duration}s linear ${delay}s forwards`;
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    // Remove after animation completes
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, (duration + delay) * 1000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
